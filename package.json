@@ -22,7 +22,19 @@
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
+    ],
+    "rules": {
+      "semi": "error",
+      "no-console": "warn",
+      "no-unreachable": "error",
+      "no-extra-semi": "error",
+      "semi-spacing": "error",
+      "no-unexpected-multiline": "error",
+      "indent": [
+        "error",
+        2
+      ]
+    }
   },
   "browserslist": {
     "production": [
@@ -39,6 +51,7 @@
   "devDependencies": {
     "eslint": "^7.27.0",
     "eslint-plugin-react": "^7.24.0",
+    "node-sass": "^4.14.1",
     "prettier": "2.3.0"
   }
 }

@@ -1,14 +1,14 @@
-import { Route, Redirect } from 'react-router-dom'
-import useToken from '../hooks/useToken'
+import { Route, Redirect } from 'react-router-dom';
+import useToken from '../hooks/useToken';
 
 function Private({ children, ...props }) {
-    const [token] = useToken(false)
+  const [token] = useToken(false);
 
-    if (!token) {
-        return <Redirect to='/login' />
-    }
+  if (!token) {
+    return <Redirect to='/login' />;
+  }
 
-    return <Route {...props} />
+  return <Route {...props}>{children}</Route>;
 }
 
-export default Private
+export default Private;

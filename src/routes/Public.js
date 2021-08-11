@@ -1,16 +1,16 @@
-import { useLocation, Redirect, Route } from 'react-router-dom'
-import useToken from '../hooks/useToken'
+import { useLocation, Redirect, Route } from 'react-router-dom';
+import useToken from '../hooks/useToken';
 
 function Public({ children, ...props }) {
-    const { pathname } = useLocation()
+  const { pathname } = useLocation();
 
-    const [token] = useToken(false)
+  const [token] = useToken(false);
 
-    if (token && pathname === '/login') {
-        return <Redirect to='/' />
-    }
+  if (token && pathname === '/login') {
+    return <Redirect to='/' />;
+  }
 
-    return <Route {...props} />
+  return <Route {...props} >{children}</Route>;
 }
 
-export default Public
+export default Public;
