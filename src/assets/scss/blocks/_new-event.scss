@@ -65,3 +65,11 @@ textarea.new-event__input {
   height: 78px;
   resize: none;
 }
+
+.new-event__actions {
+  display: flex;
+}
+
+.new-event__cancel {
+  margin-right: 16px;
+}

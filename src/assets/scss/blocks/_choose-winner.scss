@@ -1,0 +1,40 @@
+.choose-winner {
+  margin-top: 48px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.choose-winner__block {
+  background-color: #fff;
+  padding: 24px 40px;
+  border-radius: 12px;
+}
+
+.choose-winner__event {
+  width: 713px;
+  margin-right: 16px;
+}
+
+.choose-winner__title {
+  margin: 0;
+  margin-bottom: 16px;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+}
+
+.choose-winner__right-content {
+  display: flex;
+}
+
+.choose-winner__input {
+  margin-right: 24px;
+}
+
+.choose-winner__select {
+  margin-top: 16px;
+  font-size: 16px;
+  line-height: 19px;
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
