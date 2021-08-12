@@ -1,8 +1,36 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Winners from "../../components/Winners/Winners";
+import { useDebounce } from "../../hooks/useDebounce";
+import { client } from "../../utils/api-client";
 
 const Users = () => {
   const [wonUsers, setWonUsers] = useState(false);
+
+  const [contests, setContests] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [activeContest, setActiveContest] = useState("0");
+  const debouncedContest = useDebounce(activeContest, 250);
+
+  useEffect(() => {
+    client(`contests`, {
+      token: localStorage.getItem("token")
+    })
+      .then((data) => {
+        setContests(data.data);
+      });
+  }, []);
+
+  useEffect(() => {
+    console.log(debouncedContest !== "0");
+    if (debouncedContest !== "0") {
+      client(`users/contest/${debouncedContest}`, {
+        token: localStorage.getItem("token")
+      })
+        .then((data) => {
+          console.log(data);
+        });
+    }
+  }, [debouncedContest]);
 
   const handleRandomizeSubmit = (evt) => {
     evt.preventDefault();
@@ -10,21 +38,30 @@ const Users = () => {
     setWonUsers(["1"]);
   };
 
+  const handleContestChange = (evt) => {
+    setActiveContest(evt.target.value);
+  };
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const activeContestType = useMemo(() => contests && contests.find(contest => debouncedContest === contest.id), [debouncedContest]);
+
   return (
     <>
       <div className="container">
-        <form onClick={handleRandomizeSubmit} className="choose-winner">
+        <form onSubmit={handleRandomizeSubmit} className="choose-winner">
           <div className="choose-winner__block choose-winner__event">
             <label className="choose-winner__title">Tadbir</label>
-            <select className="field choose-winner__select" name="" id="">
-              <option value="1">Salom</option>
-              <option value="2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium ipsum, mollitia et quam esse voluptatibus deserunt quos eum aperiam! Praesentium.</option>
+            <select className="field choose-winner__select" defaultValue="0" onChange={handleContestChange}>
+              <option value="0">Tadbirni tanlang</option>
+              {contests.map((contest) => (
+                <option key={contest.id} value={contest.id}>{contest.title}</option>
+              ))}
             </select>
           </div>
           <div className="choose-winner__block choose-winner__winner">
             <h2 className="choose-winner__title">G’oliblarni aniqlash</h2>
             <div className="choose-winner__right-content">
-              <input className="choose-winner__input field" type="number" />
+              <output className="choose-winner__input field">{activeContestType && activeContestType.winnerCount}</output>
               <button className="submit-btn" type="submit">Randomlash</button>
             </div>
           </div>

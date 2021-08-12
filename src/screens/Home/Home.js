@@ -7,6 +7,7 @@ const Home = () => {
   const createContestForm = useRef();
 
   const [sending, setSending] = useState(false);
+  const [sendError, setSendError] = useState("");
 
   useEffect(() => {
     client(`contests`, {
@@ -19,27 +20,46 @@ const Home = () => {
   const handleCreateContest = (evt) => {
     evt.preventDefault();
 
-    const { title, date, desc, prize, sponsor, winners, datetext } = createContestForm.current;
-    setSending(true);
-    client(`contests`, {
-      token: localStorage.getItem("token"),
-      data: {
-        winnerCount: winners.value,
-        sponsorTgId: sponsor.value,
-        title: title.value,
-        orginizeDate: datetext.value,
-        desc: desc.value,
-        gift: prize.value
-      }
-    })
-      .then((data) => {
-        console.log(data);
-        setSending(false);
-        createContestForm.reset();
+    const {
+      title: {value: title},
+      date: {value: date},
+      desc: {value: desc},
+      prize: {prize},
+      sponsor: {value: sponsor},
+      winners: {value: winners},
+      datetext: {value: datetext}
+    } = createContestForm.current;
+
+    if (
+      title &&
+      date &&
+      desc &&
+      prize &&
+      sponsor &&
+      winners &&
+      datetext
+    ) {
+      setSending(true);
+      client(`contests`, {
+        token: localStorage.getItem("token"),
+        data: {
+          winnerCount: winners,
+          sponsorTgId: sponsor,
+          title: title,
+          orginizeDate: datetext,
+          desc: desc,
+          gift: prize
+        }
       })
-      .catch(() => {
-        setSending(false);
-      });
+        .then(() => {
+          setSending(false);
+          createContestForm.reset();
+        })
+        .catch((error) => {
+          setSending(false);
+          setSendError(error.message);
+        });
+    }
   };
 
   return (
@@ -79,8 +99,9 @@ const Home = () => {
           </div>
           <div className="new-event__actions">
             <button className="new-event__cancel submit-btn submit-btn--outlined" type="reset">Bekor qilish</button>
-            <button disabled={sending} className="submit-btn new-event__submit" type="submit">Bekor qilish</button>
+            <button disabled={sending} className="submit-btn new-event__submit" type="submit">{sending ? "Sending..." : "Send"}</button>
           </div>
+          {sendError && <p>{sendError}</p>}
         </form>
       </section>
       <section className="section">
