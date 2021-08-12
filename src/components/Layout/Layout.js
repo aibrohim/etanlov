@@ -14,8 +14,10 @@ const Layout = ({children}) => {
 
   useEffect(() => {
     const activeLink = navRef.current.querySelector(".header__nav-link--active");
-    setLeft(activeLink.offsetLeft);
-    setWidth(activeLink.offsetWidth);
+    if (activeLink) {
+      setLeft(activeLink.offsetLeft);
+      setWidth(activeLink.offsetWidth);
+    }
   }, [location]);
 
   return (

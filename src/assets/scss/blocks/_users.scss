@@ -16,4 +16,49 @@
 
 .users__table {
   width: 100%;
+  border-collapse: collapse;
+  color: rgba(#1E2229, 0.8);
+}
+
+.users__row {
+  height: 64px;
+  text-align: left;
+  padding: 0 40px;
+  border-bottom: 2px solid #F3F3F3;
+}
+
+.users__header-col {
+  color: #09AD90;
+}
+
+.users__col:first-child {
+  padding-left: 40px;
+  width: 450px;
+}
+
+.users__col:nth-child(2) {
+  width: 240px;
+}
+
+.users__col:nth-child(3n) {
+  text-align: center;
+}
+
+.users__col:last-child {
+  width: 200px;
+}
+
+.users__user-id {
+  font-size: 14px;
+  line-height: 17px;
+  color: rgba(#1E2229, 0.3);
+}
+
+.users__user-phone {
+  color: rgba(#1E2229, 0.8);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
