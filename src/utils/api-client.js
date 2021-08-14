@@ -23,7 +23,7 @@ function client(
         await auth.logout();
         // refresh the page for them
         window.location.assign(window.location);
-        return Promise.reject({ message: 'Please re-authenticate.' });
+        return Promise.reject({ message: 'Please re-authenticate.', code: 401 });
       }
       const data = await response.json();
 

@@ -48,6 +48,15 @@
   width: 200px;
 }
 
+.user__user-name {
+  width: 410px;
+  font-weight: bold;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  margin: 0;
+}
+
 .users__user-id {
   font-size: 14px;
   line-height: 17px;

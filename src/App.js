@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch } from 'react-router-dom';
+import { Redirect, Switch, useLocation } from 'react-router-dom';
 import Layout from './components/Layout/Layout';
 import useToken from './hooks/useToken';
 import Private from './routes/Private';
@@ -12,6 +12,8 @@ import "./assets/scss/main.scss";
 
 function App() {
   const [token] = useToken();
+
+  const { pathname } = useLocation();
 
   return (
     <Switch>
@@ -27,11 +29,15 @@ function App() {
               </Private>
             </Layout>
           )
-          : (
-            <Public exact path="/login">
-              <Login />
-            </Public>
-          )
+          : pathname === "/login"
+            ? (
+              <Public exact path="/login">
+                <Login />
+              </Public>
+            )
+            : (
+              <Redirect to='/login' />
+            )
       }
     </Switch>
   );

@@ -39,3 +39,17 @@
   padding-top: 14px;
   padding-bottom: 14px;
 }
+
+@keyframes randomizing {
+  from {
+    transform: rotate(0);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.choose-winner__refresh-icon {
+  animation: randomizing 1s infinite linear;
+}
