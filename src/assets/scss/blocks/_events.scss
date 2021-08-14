@@ -32,6 +32,15 @@
   margin: 0;
 }
 
+.events__item-title a {
+  color: #1E2229;
+  text-decoration: none;
+
+  &:hover {
+    color: rgba(#1E2229, 0.7);
+  }
+}
+
 .events__item-desc {
   margin: 12px 0 0;
   color: rgba(#1E2229, 0.7);

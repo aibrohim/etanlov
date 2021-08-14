@@ -1,6 +1,6 @@
 import { client } from './api-client';
 
-const localStorageKey = '__auth_provider_token__';
+const localStorageKey = 'token';
 
 async function getToken() {
   return window.localStorage.getItem(localStorageKey);

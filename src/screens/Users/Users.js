@@ -5,8 +5,11 @@ import { useDebounce } from "../../hooks/useDebounce";
 import { client } from "../../utils/api-client";
 
 import RandomIcon from "../../assets/img/refresh-line.svg";
+import useQuery from "../../hooks/useQuery";
 
 const Users = () => {
+  const query = useQuery();
+  const eventId = query.get("eventId");
   const [wonUsers, setWonUsers] = useState(null);
   const [isRandomizing, setRandomizing] = useState(false);
 
@@ -15,7 +18,7 @@ const Users = () => {
   const [usersLoading, setUsersLoading] = useState(false);
   const [usersError, setUsersError] = useState("");
   const [users, setUsers] = useState([]);
-  const [activeContest, setActiveContest] = useState("0");
+  const [activeContest, setActiveContest] = useState(eventId ? eventId : "0");
   const debouncedContest = useDebounce(activeContest, 250);
 
   useEffect(() => {
@@ -77,7 +80,7 @@ const Users = () => {
         <form onSubmit={handleRandomizeSubmit} className="choose-winner">
           <div className="choose-winner__block choose-winner__event">
             <label className="choose-winner__title">Tadbir</label>
-            <select className="field choose-winner__select" defaultValue="0" onChange={handleContestChange}>
+            <select className="field choose-winner__select" defaultValue={activeContest} onChange={handleContestChange}>
               <option value="0" disabled>Tadbirni tanlang</option>
               {contests.map((contest) => (
                 <option key={contest.id} value={contest.id}>{contest.title}</option>
@@ -102,7 +105,7 @@ const Users = () => {
           {usersLoading && <p style={{fontStyle: "italic"}}>Userlar kelyapti...</p>}
           {usersError && <p>{usersError}</p>}
           {(!usersLoading && users.length) ? <table className="users__table">
-            <caption className="users__title">Ro’yxatdan o’tganlar (378)</caption>
+            <caption className="users__title">Ro’yxatdan o’tganlar ({users.length})</caption>
             <thead className="users__header">
               <tr className="users__row">
                 <th className="users__col users__header-col">Ism va familiya</th>

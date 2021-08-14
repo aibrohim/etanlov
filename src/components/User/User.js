@@ -1,8 +1,8 @@
 const User = ({data}) => {
-  const {firstName, telegramId, phoneNumber: phone, age: year, gender} = data;
+  const {firstName, telegramId, phoneNumber: phone, bithYear: year, gender} = data;
   const currentYear = new Date().getFullYear();
 
-  const age = currentYear - year;
+  const age = year ? currentYear - year : null;
   return (
     <tr className="users__row">
       <td className="users__col">
