@@ -133,7 +133,7 @@ const Home = () => {
         {contestsError && <p>{contestsError}</p>}
         <ul className="events">
           {contests.map((contest) => (
-            <Contest key={contest.id} data={contest}/>
+            <Contest key={contest.id} data={contest} setContests={setContests}/>
           ))}
         </ul>
       </section>

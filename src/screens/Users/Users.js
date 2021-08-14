@@ -57,7 +57,6 @@ const Users = () => {
         .then((data) => {
           setRandomizing(false);
           setWonUsers(data.data);
-          console.log(data);
         })
         .catch(() => {
           setRandomizing(false);
@@ -109,7 +108,7 @@ const Users = () => {
                 <th className="users__col users__header-col">Ism va familiya</th>
                 <th className="users__col users__header-col">Telefon raqam</th>
                 <th className="users__col users__header-col">Yosh</th>
-                <th className="users__col users__header-col">Joylashuv</th>
+                <th className="users__col users__header-col">Jinsi</th>
               </tr>
             </thead>
             <tbody>

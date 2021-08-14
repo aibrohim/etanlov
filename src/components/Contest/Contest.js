@@ -3,20 +3,22 @@ import { client } from "../../utils/api-client";
 import User from "../../assets/img/user.svg";
 import Calendar from "../../assets/img/calendar-event-line.svg";
 import Trash from "../../assets/img/trash.svg";
+import { useState } from "react";
 
 const Contest = ({data}) => {
+  const [isActive, setActive] = useState(data.isActive);
   const handleDeleteClick = () => {
     client(`contests/deactivate/${data.id}`, {
       method: "PUT",
       token: localStorage.getItem("token"),
     })
-      .then((data) => {
-        console.log(data);
+      .then(() => {
+        setActive(false);
       });
   };
 
   return (
-    <li className="events__item">
+    <li className="events__item" style={{opacity: isActive ? "1" : "0.6"}}>
       <div className="events__item-content">
         <h3 className="events__item-title">{data.title}</h3>
         <p className="events__item-desc">{data.desc}</p>
@@ -31,7 +33,7 @@ const Contest = ({data}) => {
           <img src={User} alt="user" />
           400
         </p>
-        <button className="events__item-delete">
+        <button onClick={handleDeleteClick} className="events__item-delete">
           <span>
             <img src={Trash} alt="" />
             O'chirish

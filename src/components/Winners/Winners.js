@@ -18,8 +18,8 @@ const Winners = ({winners, setModalUsers}) => {
                 <tr key={winner.id} className="users__row">
                   <td className="users__col">
                     <p className="users__user-name">{showNoData(winner.firstName)}</p>
-                    <span className="users__user-id">#{showNoData(winner.telegramId)}</span>
                   </td>
+                  <td>{showNoData(winner.telegramId)}</td>
                   <td className="users__col">
                     <a className="users__user-phone" href={"tel:" + winner.phoneNumber}>{showNoData(winner.phoneNumber)}</a>
                   </td>
