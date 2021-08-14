@@ -120,7 +120,7 @@ const Users = () => {
           </table> : null}
         </div>
       </div>
-      {wonUsers && <Winners winners={wonUsers} setModalUsers={setWonUsers} />}
+      {wonUsers && <Winners winners={wonUsers} setModalUsers={setWonUsers} usersLength={users.length} />}
     </>
   );
 };

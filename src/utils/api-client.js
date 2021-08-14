@@ -26,12 +26,6 @@ function client(
         return Promise.reject({ message: 'Please re-authenticate.', code: 401 });
       }
       const data = await response.json();
-      if (!data.success && data.code === 401) {
-        auth.logout();
-        // refresh the page for them
-        window.location.assign(window.location);
-        return Promise.reject({ message: 'Please re-authenticate.', code: 401 });
-      }
       if (response.ok) {
         return data;
       } else {

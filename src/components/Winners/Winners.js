@@ -1,6 +1,6 @@
 import showNoData from "../../utils/showNoData";
 
-const Winners = ({winners, setModalUsers}) => {
+const Winners = ({winners, setModalUsers, usersLength}) => {
   const handleModalClick = (evt) => {
     if (evt.target.matches(".winners")) {
       setModalUsers(null);
@@ -12,7 +12,7 @@ const Winners = ({winners, setModalUsers}) => {
       <div className="winners__content">
         <div className="users">
           <table className="users__table">
-            <caption className="users__title">Ro’yxatdan o’tganlar (378)</caption>
+            <caption className="users__title">Ro’yxatdan o’tganlar ({usersLength})</caption>
             <tbody>
               {winners && winners.map((winner) => (
                 <tr key={winner.id} className="users__row">
