@@ -46,8 +46,8 @@ const Login = () => {
         <div className="auth__content">
           <h1 className="auth__title">Login</h1>
           <form onSubmit={handleFormSubmit} action="#" method="post">
-            <input className="auth__field field" value={phoneNumber} onChange={evt => setPhoneNumber(evt.target.value)} type="text" />
-            <input className="auth__field field" value={password} onChange={evt => setPassword(evt.target.value)} type="password" />
+            <input placeholder="+998901234567" className="auth__field field" value={phoneNumber} onChange={evt => setPhoneNumber(evt.target.value)} type="text" />
+            <input placeholder="12345678" className="auth__field field" value={password} onChange={evt => setPassword(evt.target.value)} type="password" />
             <button disabled={isLogging} className="auth__submit submit-btn" type="submit">{isLogging ? "Logging in..." : "Login"}</button>
             {loginError && <p style={{color: "red"}}>{loginError}</p>}
           </form>
