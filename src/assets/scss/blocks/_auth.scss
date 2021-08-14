@@ -1,0 +1,30 @@
+.auth {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30px 0;
+  min-height: 100vh;
+}
+
+.auth__logo {
+  width: 250px;
+}
+
+.auth__content {
+  background-color: #fff;
+  width: 400px;
+  padding: 30px;
+  border-radius: 20px;
+}
+
+.auth__title {
+  font-size: 30px;
+}
+
+.auth__field {
+  margin-bottom: 15px;
+}
+
+.auth__submit {
+  width: 100%;
+}
