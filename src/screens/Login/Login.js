@@ -44,7 +44,7 @@ const Login = () => {
       <div className="auth container">
         <img className="auth__logo" src={Logo} alt="" />
         <div className="auth__content">
-          <h1 className="auth__title visually-hidden">Login</h1>
+          <h1 className="auth__title">Login</h1>
           <form onSubmit={handleFormSubmit} action="#" method="post">
             <input placeholder="+998901234567" className="auth__field field" value={phoneNumber} onChange={evt => setPhoneNumber(evt.target.value)} type="text" />
             <input placeholder="12345678" className="auth__field field" value={password} onChange={evt => setPassword(evt.target.value)} type="password" />
