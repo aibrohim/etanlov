@@ -58,7 +58,7 @@ const Home = () => {
       formData.append("gift", prize);
       formData.append("image", files[0]);
       setSending(true);
-      fetch(`http://rajabov.uz:8000/api/contests`, {
+      fetch(`https://api.rajabov.uz/api/contests`, {
         method: "POST",
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
@@ -96,7 +96,7 @@ const Home = () => {
           </label>
           <label className="new-event__label">
             Tanlov rasmi
-            <input className="new-event__input" id="img" type="file" placeholder="Tanlov rasmini tanlang"/>
+            <input className="new-event__input" id="img" type="file" accept="image/*" placeholder="Tanlov rasmini tanlang"/>
           </label>
           <label className="new-event__label">
             Tanlov tavisifi
