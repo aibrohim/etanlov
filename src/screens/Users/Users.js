@@ -6,6 +6,7 @@ import { client } from "../../utils/api-client";
 
 import RandomIcon from "../../assets/img/refresh-line.svg";
 import useQuery from "../../hooks/useQuery";
+import { USERS_LIMIT } from "../../consts";
 
 const Users = () => {
   const query = useQuery();
@@ -21,6 +22,10 @@ const Users = () => {
   const [activeContest, setActiveContest] = useState(eventId ? eventId : "0");
   const debouncedContest = useDebounce(activeContest, 250);
 
+  const [pageLoading, setPageLoading] = useState(false);
+  const [activePage, setActivePage] = useState(1);
+  const [noMore, setNoMore] = useState(false);
+
   useEffect(() => {
     client(`contests`, {
       token: localStorage.getItem("token")
@@ -31,21 +36,51 @@ const Users = () => {
   }, []);
 
   useEffect(() => {
+    if (activeContest === "0") {
+      client(`users?limit=${USERS_LIMIT}&page=${activePage}`, {
+        token: localStorage.getItem("token")
+      })
+        .then((data) => {
+          setPageLoading(false);
+          setUsers((users) => [...data.data, ...users]);
+          if (data.data.length < USERS_LIMIT) {
+            setNoMore(true);
+          }
+        })
+        .catch((error) => {
+          setPageLoading(false);
+          setUsersError(error.message);
+        });
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activePage]);
+
+  useEffect(() => {
     if (debouncedContest !== "0") {
-      setUsersLoading(true);
       setUsersError("");
-      client(`users/contest/${debouncedContest}`, {
+      client(`users/contest/${debouncedContest}?limit=${USERS_LIMIT}&page=${activePage}`, {
         token: localStorage.getItem("token")
       })
         .then((data) => {
           setUsersLoading(false);
-          setUsers(data.data);
+          setUsers((users) => [...data.data, ...users]);
           setUsersError("");
+          setPageLoading(false);
+          if (data.data.length < USERS_LIMIT) {
+            setNoMore(true);
+          }
         })
         .catch((error) => {
           setUsersError(error.message);
           setUsersLoading(false);
+          setPageLoading(false);
         });
+    }
+  }, [debouncedContest, activePage]);
+
+  useEffect(() => {
+    if (debouncedContest !== "0") {
+      setUsersLoading(true);
     }
   }, [debouncedContest]);
 
@@ -68,11 +103,18 @@ const Users = () => {
   };
 
   const handleContestChange = (evt) => {
+    setActivePage(1);
+    setUsers([]);
     setActiveContest(evt.target.value);
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const activeContestType = useMemo(() => contests && contests.find(contest => debouncedContest === contest.id), [debouncedContest]);
+  const activeContestType = useMemo(() => contests && contests.find(contest => activeContest === contest.id), [activeContest, contests]);
+
+  const handleMoreClick = () => {
+    setPageLoading(true);
+    setActivePage(activePage + 1);
+  };
 
   return (
     <>
@@ -119,6 +161,7 @@ const Users = () => {
             </tbody>
           </table> : null}
         </div>
+        {!noMore && <button disabled={pageLoading} onClick={handleMoreClick} className="more-btn">{pageLoading ? "Yuklanyapti..." : "Yana yuklash"}</button>}
       </div>
       {wonUsers && <Winners winners={wonUsers} setModalUsers={setWonUsers} usersLength={users.length} />}
     </>
