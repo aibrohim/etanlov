@@ -1,1 +1,1 @@
-export const USERS_LIMIT = 1;
+export const USERS_LIMIT = 20;
