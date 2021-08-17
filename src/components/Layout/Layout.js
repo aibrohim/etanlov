@@ -34,7 +34,7 @@ const Layout = ({children}) => {
                 <NavLink exact className="header__nav-link" activeClassName="header__nav-link--active" to="/">Admin pannel</NavLink>
               </li>
               <li className="header__nav-item">
-                <NavLink exact className="header__nav-link" activeClassName="header__nav-link--active" to="/users">Users</NavLink>
+                <NavLink exact className="header__nav-link" activeClassName="header__nav-link--active" to="/users">Ro'yxatdan o'tganlar</NavLink>
               </li>
             </ul>
           </nav>

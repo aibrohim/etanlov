@@ -11,6 +11,8 @@ const Home = () => {
   const [sending, setSending] = useState(false);
   const [sendError, setSendError] = useState("");
 
+  const [isBtnDisabled, setBtnDisabled] = useState(true);
+
   useEffect(() => {
     setContestsLoading(true);
     setContestsError("");
@@ -85,11 +87,18 @@ const Home = () => {
     }
   };
 
+  const handleFormBlur = (evt) => {
+    if (!evt.target.value.trim()) {
+      return setBtnDisabled(true);
+    }
+    setBtnDisabled(false);
+  };
+
   return (
     <div className="container">
       <section className="section">
         <h2 className="section__title">Yangi tanlov</h2>
-        <form ref={createContestForm} onSubmit={handleCreateContest} method="POST" action="#" className="new-event">
+        <form ref={createContestForm} onBlur={handleFormBlur} onSubmit={handleCreateContest} method="POST" action="#" className="new-event">
           <label className="new-event__label">
             Tanlov nomi
             <input className="new-event__input" id="title" type="text" placeholder="some text"/>
@@ -122,7 +131,7 @@ const Home = () => {
           </div>
           <div className="new-event__actions">
             <button className="new-event__cancel submit-btn submit-btn--outlined" type="reset">Bekor qilish</button>
-            <button disabled={sending} className="submit-btn new-event__submit" type="submit">{sending ? "Sending..." : "Send"}</button>
+            <button disabled={sending || isBtnDisabled} className="submit-btn new-event__submit" type="submit">{sending ? "Sending..." : "Send"}</button>
           </div>
           {sendError && <p>{sendError}</p>}
         </form>
