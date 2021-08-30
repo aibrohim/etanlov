@@ -56,6 +56,10 @@ const Users = () => {
   }, [activePage]);
 
   useEffect(() => {
+    setNoMore(false);
+  }, [debouncedContest]);
+
+  useEffect(() => {
     if (debouncedContest !== "0") {
       setUsersError("");
       client(`users/contest/${debouncedContest}?limit=${USERS_LIMIT}&page=${activePage}`, {
