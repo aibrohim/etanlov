@@ -12,7 +12,7 @@ const Winners = ({winners, setModalUsers, usersLength}) => {
       <div className="winners__content">
         <div className="users">
           <table className="users__table">
-            <caption className="users__title">Ro’yxatdan o’tganlar ({usersLength})</caption>
+            <caption className="users__title">G'oliblar ({usersLength})</caption>
             <tbody>
               {winners && winners.map((winner) => (
                 <tr key={winner.id} className="users__row">

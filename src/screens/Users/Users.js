@@ -6,7 +6,7 @@ import { client } from "../../utils/api-client";
 
 import RandomIcon from "../../assets/img/refresh-line.svg";
 import useQuery from "../../hooks/useQuery";
-import { USERS_LIMIT } from "../../consts";
+import { REQUIRED_RANDOM_TIME, USERS_LIMIT } from "../../consts";
 
 const Users = () => {
   const query = useQuery();
@@ -56,10 +56,6 @@ const Users = () => {
   }, [activePage]);
 
   useEffect(() => {
-    setNoMore(false);
-  }, [debouncedContest]);
-
-  useEffect(() => {
     if (debouncedContest !== "0") {
       setUsersError("");
       client(`users/contest/${debouncedContest}?limit=${USERS_LIMIT}&page=${activePage}`, {
@@ -72,6 +68,8 @@ const Users = () => {
           setPageLoading(false);
           if (data.data.length < USERS_LIMIT) {
             setNoMore(true);
+          } else {
+            setNoMore(false);
           }
         })
         .catch((error) => {
@@ -90,6 +88,7 @@ const Users = () => {
 
   const handleRandomizeSubmit = (evt) => {
     evt.preventDefault();
+    const startTime = new Date().getTime();
 
     if (activeContest !== "0") {
       setRandomizing(true);
@@ -97,8 +96,18 @@ const Users = () => {
         token: localStorage.getItem("token")
       })
         .then((data) => {
-          setRandomizing(false);
-          setWonUsers(data.data);
+          const endTime = new Date().getTime();
+          const randomizingDuration = endTime - startTime;
+          const timoutDuration = REQUIRED_RANDOM_TIME - randomizingDuration;
+          if (randomizingDuration >= REQUIRED_RANDOM_TIME) {
+            setRandomizing(false);
+            setWonUsers(data.data);
+          } else {
+            setTimeout(() => {
+              setRandomizing(false);
+              setWonUsers(data.data);
+            }, timoutDuration);
+          }
         })
         .catch(() => {
           setRandomizing(false);
